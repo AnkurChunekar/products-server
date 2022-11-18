@@ -7,6 +7,15 @@ const port = 3000;
 //   console.log(bodyParser.json().toString());
 //   next();
 // }
+app.set("view engine", "ejs");
+
+const data = [
+  "This is rendered using ejs.",
+  "lightening fast",
+  "lightweight",
+  "can handle json data",
+  "styled using static css file",
+];
 
 const database = {
   products: [
@@ -33,7 +42,10 @@ const database = {
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render("index", {
+    name: "Ankur",
+    data,
+  });
 });
 
 app.get("/products", (req, res) => {
