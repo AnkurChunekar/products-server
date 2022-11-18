@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 // internal
 const { database, serverDetails } = require("./constants/constants");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 // const myLogger = (req, res, next) => {
 //   console.log(bodyParser.json().toString());
@@ -38,5 +39,5 @@ app.get("/products/:id", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("SERVER IS RUNNING");
+  console.log("Server is running");
 });
