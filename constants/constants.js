@@ -1,9 +1,9 @@
 const serverDetails = [
   "This is rendered using ejs.",
-  "lightening fast",
-  "lightweight",
-  "can handle json data",
-  "styled using static css file",
+  "Lightening fast",
+  "Very Lightweight",
+  "Can handle json data",
+  "Serves static files",
 ];
 
 const database = {
