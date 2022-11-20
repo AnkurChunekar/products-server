@@ -10,6 +10,11 @@ const productsV2 = require("./routers/products.router.v2");
 const app = express();
 const port = process.env.PORT;
 
+const myProductsLogger = (req, res, next) => {
+  console.log("Time:", Date.now());
+  next();
+};
+
 // view engine
 app.set("view engine", "ejs");
 
@@ -26,8 +31,8 @@ app.get("/", (req, res) => {
 });
 
 // other routes
-app.use("/v1/products", productsV1);
-app.use("/v2/products", productsV2);
+app.use("/v1/products", myProductsLogger, productsV1);
+app.use("/v2/products", myProductsLogger, productsV2);
 
 app.listen(port, () => {
   console.log("Server is running");
