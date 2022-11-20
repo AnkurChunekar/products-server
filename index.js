@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const cors = require("cors");
 
 // internal
 const { serverDetails } = require("./constants/constants");
@@ -19,6 +20,7 @@ const myProductsLogger = (req, res, next) => {
 app.set("view engine", "ejs");
 
 // middlewares
+app.use(cors());
 app.use("/assets", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
@@ -35,5 +37,5 @@ app.use("/v1/products", myProductsLogger, productsV1);
 app.use("/v2/products", myProductsLogger, productsV2);
 
 app.listen(port, () => {
-  console.log("Server is running");
+  console.log(`CORS-enabled web server listening on port ${port}`);
 });
