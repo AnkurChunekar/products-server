@@ -4,7 +4,8 @@ require("dotenv").config();
 
 // internal
 const { serverDetails } = require("./constants/constants");
-const products = require("./routers/products.router");
+const productsV1 = require("./routers/products.router.v1");
+const productsV2 = require("./routers/products.router.v2");
 
 const app = express();
 const port = process.env.PORT;
@@ -25,7 +26,8 @@ app.get("/", (req, res) => {
 });
 
 // other routes
-app.use("/products", products);
+app.use("/v1/products", productsV1);
+app.use("/v2/products", productsV2);
 
 app.listen(port, () => {
   console.log("Server is running");
