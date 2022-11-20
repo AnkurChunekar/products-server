@@ -7,14 +7,10 @@ const cors = require("cors");
 const { serverDetails } = require("./constants/constants");
 const productsV1 = require("./routers/products.router.v1");
 const productsV2 = require("./routers/products.router.v2");
+const logger = require("./middlewares/logger.middleware");
 
 const app = express();
 const port = process.env.PORT;
-
-const myProductsLogger = (req, res, next) => {
-  console.log("Time:", Date.now());
-  next();
-};
 
 // view engine
 app.set("view engine", "ejs");
@@ -33,8 +29,8 @@ app.get("/", (req, res) => {
 });
 
 // other routes
-app.use("/v1/products", myProductsLogger, productsV1);
-app.use("/v2/products", myProductsLogger, productsV2);
+app.use("/v1/products", logger, productsV1);
+app.use("/v2/products", logger, productsV2);
 
 app.listen(port, () => {
   console.log(`CORS-enabled web server listening on port ${port}`);
