@@ -7,6 +7,16 @@ const serverDetails = [
 ];
 
 const database = {
+  users: [
+    {
+      username: "ankur",
+      password: "1234",
+    },
+    {
+      username: "ram",
+      password: "4567",
+    },
+  ],
   products: [
     {
       id: 1,
