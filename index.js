@@ -7,10 +7,12 @@ const cors = require("cors");
 const { serverDetails } = require("./constants/constants");
 const productsV1 = require("./routers/products.router.v1");
 const productsV2 = require("./routers/products.router.v2");
-const logger = require("./middlewares/logger.middleware");
+const usersV1 = require("./routers/users.router.v1");
+const login = require("./routers/login.router");
+
 const routeNotFound = require("./middlewares/routeNotFound.middleware");
 const errorHandler = require("./middlewares/errorHandler.middleware");
-
+const authenticator = require("./middlewares/authenticator.middleware");
 
 const app = express();
 const port = process.env.PORT;
@@ -32,8 +34,10 @@ app.get("/", (req, res) => {
 });
 
 // other routes
-app.use("/v1/products", logger, productsV1);
-app.use("/v2/products", logger, productsV2);
+app.use("/login", login);
+app.use("/v1/products", productsV1);
+app.use("/v2/products", productsV2);
+app.use("/v1/users", authenticator, usersV1);
 
 // error handling routes
 app.use(routeNotFound);
