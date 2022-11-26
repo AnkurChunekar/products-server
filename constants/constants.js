@@ -9,10 +9,12 @@ const serverDetails = [
 const database = {
   users: [
     {
+      id: 1,
       username: "ankur",
       password: "1234",
     },
     {
+      id: 2,
       username: "ram",
       password: "4567",
     },
