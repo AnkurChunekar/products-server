@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 const { database } = require("../constants/constants");
 
@@ -9,7 +10,10 @@ router.post("/", (req, res) => {
     (item) => item.username === username && item.password === password
   );
   if (user) {
-    res.json({ message: "Successfully logged in", token: "abcdefghi" });
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.json({ message: "Successfully logged in", token });
   } else {
     res.status(401).json({ message: "Incorrect username or password!" });
   }
