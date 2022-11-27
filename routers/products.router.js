@@ -28,19 +28,39 @@ router
     }
   });
 
-router.route("/:productId").get(async (req, res) => {
-  const { productId } = req.params;
-  try {
-    if (productId === undefined) {
-      throw { message: "Missing productId!" };
+router
+  .route("/:productId")
+  .get(async (req, res) => {
+    const { productId } = req.params;
+    try {
+      if (productId === undefined) {
+        throw { message: "Missing productId!" };
+      }
+      const product = await Product.find({ _id: productId });
+      res.json(product);
+    } catch (error) {
+      res
+        .status(400)
+        .json({ success: false, message: "could not retrieve product" });
     }
-    const product = await Product.find({ _id: productId });
-    res.json(product);
-  } catch (error) {
-    res
-      .status(400)
-      .json({ success: false, message: "could not retrieve product " });
-  }
-});
+  })
+  .post(async (req, res) => {
+    const { productId } = req.params;
+    try {
+      if (productId === undefined) {
+        throw { message: "Missing productId!" };
+      }
+      const product = await Product.findOneAndUpdate(
+        { _id: productId },
+        req.body,
+        { new: true }
+      );
+      res.json(product);
+    } catch (error) {
+      res
+        .status(400)
+        .json({ success: false, message: "could not update product", error });
+    }
+  });
 
 module.exports = router;
