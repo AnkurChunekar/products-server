@@ -28,9 +28,19 @@ router
     }
   });
 
-router.route("/:id").get((req, res) => {
-  const { id } = req.params;
-  res.json(`You want the product with this id ${id}?`);
+router.route("/:productId").get(async (req, res) => {
+  const { productId } = req.params;
+  try {
+    if (productId === undefined) {
+      throw { message: "Missing productId!" };
+    }
+    const product = await Product.find({ _id: productId });
+    res.json(product);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ success: false, message: "could not retrieve product " });
+  }
 });
 
 module.exports = router;
