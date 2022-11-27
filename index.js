@@ -1,9 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-require("dotenv").config();
 const cors = require("cors");
 
 // internal
+const { initializeDbConnection } = require("./db/db.connect");
 const { serverDetails } = require("./constants/constants");
 const productsV1 = require("./routers/products.router.v1");
 const productsV2 = require("./routers/products.router.v2");
@@ -13,8 +14,9 @@ const cart = require("./routers/cart.router");
 
 const routeNotFound = require("./middlewares/routeNotFound.middleware");
 const errorHandler = require("./middlewares/errorHandler.middleware");
-// const authenticator = require("./middlewares/authenticator.middleware");
 const authVerify = require("./middlewares/authVerify.middleware");
+
+initializeDbConnection();
 
 const app = express();
 const port = process.env.PORT;
@@ -37,7 +39,7 @@ app.get("/", (req, res) => {
 
 // other routes
 app.use("/login", login);
-app.use("/v1/products", productsV1);
+app.use("/products", productsV1);
 app.use("/v2/products", productsV2);
 // app.use("/v1/users", authenticator, usersV1);
 app.use("/cart", authVerify, cart);
