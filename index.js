@@ -6,9 +6,7 @@ const cors = require("cors");
 // internal
 const { initializeDbConnection } = require("./db/db.connect");
 const { serverDetails } = require("./constants/constants");
-const productsV1 = require("./routers/products.router.v1");
-const productsV2 = require("./routers/products.router.v2");
-const usersV1 = require("./routers/users.router.v1");
+const products = require("./routers/products.router");
 const login = require("./routers/login.router");
 const cart = require("./routers/cart.router");
 
@@ -39,9 +37,7 @@ app.get("/", (req, res) => {
 
 // other routes
 app.use("/login", login);
-app.use("/products", productsV1);
-app.use("/v2/products", productsV2);
-// app.use("/v1/users", authenticator, usersV1);
+app.use("/products", authVerify, products);
 app.use("/cart", authVerify, cart);
 
 // error handling routes
